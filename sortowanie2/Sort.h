@@ -13,8 +13,8 @@ public:
     void Display(); //wyswietlanie
     void RandomInit();
     void Check(); //sprawdzanie czy tablica dobrze się posortowała
-    void Merge(int, int, T*);
-    void MergeSort(int, int, T*);
+    void Merge(int, int);
+    void MergeSort(int, int, int );
 
 };
 

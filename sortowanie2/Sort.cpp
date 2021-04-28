@@ -7,15 +7,12 @@
 #include "Sort.h"
 
 
-
-
 template <typename T, int size>
 Sort<T, size>::Sort()
 {
     tab = new T[size];
 
 }
-
 
 
 
@@ -59,10 +56,7 @@ void Sort< T , size>::Quicksort(int b, int e){
     if(begin<e){
         Quicksort(begin,e);
     }
-
-
 }
-
 
 
 
@@ -95,35 +89,12 @@ void Sort<T,size>::RandomInit() {
 
 
 
-/*template <typename T, int size>
-void Sort<T,size>::Reverse() {
-
-
-    int tmp=size/2;
-    int j=0;
-
-    for(int i=0;i<size;i++){
-
-        int second=size1-1;
-        j=0;
-        while(second>=tmp && j<tmp) {
-            std::swap(tab[i][j], tab[i][second]);
-            second--;
-            j++;
-        }
-    }
-}*/
-
-
-
-
-
 template <typename T, int size>
 void Sort<T,size>::Check(){
 
         for(int j=0;j<size;++j){
             if(tab[j-1]>tab[j]){
-                std::cout<<"Nie dziala, sory Ola"<<std::endl;
+                std::cout<<"Nie dziala"<<std::endl;
                 exit(1);
             }
         }
@@ -132,58 +103,70 @@ void Sort<T,size>::Check(){
 }
 
 
-template <typename T, int size>
-void Sort<T, size>::Merge(int b, int e,T* temp){
 
-    int m=(b+e)/2;
+
+template <typename T, int size>
+void Sort<T, size>::Merge(int b, int e){
 
     if(b<e){
-
-    Merge(b,m,tab);
-    Merge(m+1,b,tab);
-    MergeSort(b,e,tab);
+        int m=(b+e)/2;
+        Merge(b,m);
+        Merge(m+1,e);
+        MergeSort(b,e,m);
     }
 
 }
 
 
 template <typename T, int size>
-    void Sort<T, size>::MergeSort(int begin, int end, T* temp){
+    void Sort<T, size>::MergeSort(int begin, int end, int middle){
 
-    int middle=(begin+end)/2;
+    int *temp= new int[size];
+
     int point1=begin;
     int point2=middle+1;
-    int k=0;
+    int index=begin;
+
+
 
     while(point1<=middle && point2<=end ){
 
 
+
     if(tab[point1]<tab[point2]){
-        temp[k]=tab[point1];
+        temp[index]=tab[point1];
         point1++;
     }
 
     else {
-        temp[k]=tab[point2];
+        temp[index]=tab[point2];
         point2++;
     }
 
-        k++;
+        index++;
+
     }
 
 
 
     while (point1<=middle){
-        temp[k]=tab[point1];
+        temp[index]=tab[point1];
         point1++;
-        k++;
+        index++;
     }
 
     while(point2<=end){
-        temp[k]=tab[point2];
+        temp[index]=tab[point2];
         point2++;
-        k++;
+        index++;
     }
 
+
+    for(int i=begin;i<=end;i++) {
+        tab[i]=temp[i];
+    }
+
+
+    delete[] temp;
 
 }
