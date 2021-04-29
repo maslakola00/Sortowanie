@@ -19,9 +19,7 @@ Sort<T, size>::Sort()
 template <typename T, int size>
 Sort<T, size>::~Sort()
 {
-
     delete[] tab;
-
 }
 
 
@@ -80,7 +78,7 @@ void Sort<T,size>::RandomInit() {
     srand(time(NULL));
 
         for(int j=0;j<size;j++){
-            tab[j]=(std::rand()%100)+1;
+            tab[j]=(std::rand()%10)+1;
         }
         std::cout<<std::endl;
 
@@ -142,9 +140,7 @@ template <typename T, int size>
         temp[index]=tab[point2];
         point2++;
     }
-
         index++;
-
     }
 
 
@@ -161,12 +157,48 @@ template <typename T, int size>
         index++;
     }
 
-
     for(int i=begin;i<=end;i++) {
         tab[i]=temp[i];
     }
-
-
     delete[] temp;
 
 }
+
+
+template <typename T, int size>
+void Sort<T, size>::Cup(const int wmin, const int wmax,int index){
+
+    int *temp= new int[wmax+1];
+    int b=0;
+
+
+
+    while(index<=wmax) {
+        int i=1;
+        while (i <= size) {
+            if (tab[i-1] ==index) {
+                temp[index]=temp[index]+1;
+            }
+            i++;
+        }
+        index++;
+
+    }
+
+    for(int j=0;j<(wmax+1);j++){
+
+        for(int k=1;k<=temp[j];k++) {
+            tab[b]=j;
+             b++;
+          }
+
+    }
+
+
+
+}
+
+
+
+
+

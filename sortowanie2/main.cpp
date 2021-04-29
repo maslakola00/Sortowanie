@@ -7,11 +7,18 @@
 #include "Sort.cpp"
 
 
+
+
 int main() {
-    const int size=1000;
-    int i=2;
+
+
+    const int size=10;
+    const int wmin=1;
+    const int wmax=10;
+    int i=3;
     Sort<int, size> tab1; //inicjalizacja samymi zerami
-    Sort<int, size> tab2;
+
+
 
     switch(i) {
 
@@ -34,6 +41,17 @@ int main() {
             tab1.Check();
 
             break;
+
+
+        case 3:
+            tab1.RandomInit();
+            tab1.Display();
+            std::cout<<"Po sortowaniu"<<std::endl;
+            tab1.Cup(wmin,wmax,1);
+            tab1.Display();
+            tab1.Check();
+            break;
+
 
     }
 

@@ -7,6 +7,8 @@ class Sort{
 
 
 public:
+
+
     Sort(); //konstruktor bezparamtrowy
     ~Sort(); //destruktor
     void Quicksort(int , int ); //funkcja quicksorta
@@ -15,6 +17,8 @@ public:
     void Check(); //sprawdzanie czy tablica dobrze się posortowała
     void Merge(int, int);
     void MergeSort(int, int, int );
+    void Cup(const int, const int, int ); //sortowanie kubelkowe
+
 
 };
 
