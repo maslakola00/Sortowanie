@@ -1,9 +1,16 @@
 #pragma once
+#include <iostream>
+#include <algorithm>
+#include <utility>
+#include <stdlib.h>
+#include <chrono>
+#include "cstdlib"
+#include "Object.h"
 
-template <typename T, int size>
+template < int size>
 class Sort{
 
-    T *tab;
+    Object *tab;
 
 
 public:
@@ -13,11 +20,16 @@ public:
     ~Sort(); //destruktor
     void Quicksort(int , int ); //funkcja quicksorta
     void Display(); //wyswietlanie
-    void RandomInit();
     void Check(); //sprawdzanie czy tablica dobrze się posortowała
     void Merge(int, int);
     void MergeSort(int, int, int );
-    void Cup(const int, const int, int ); //sortowanie kubelkowe
+    void CupSort(const int, const int, int ); //sortowanie kubelkowe
+
+    Object* get_obj(){
+
+        return tab;
+    }
+
 
 
 };

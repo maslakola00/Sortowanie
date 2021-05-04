@@ -5,42 +5,49 @@
 #include <chrono>
 #include "cstdlib"
 #include "Sort.h"
+#include "Object.h"
 
 
-template <typename T, int size>
-Sort<T, size>::Sort()
+template <int size>
+Sort<size>::Sort()
 {
-    tab = new T[size];
+    tab = new Object[size];
 
 }
 
 
 
-template <typename T, int size>
-Sort<T, size>::~Sort()
+template <int size>
+Sort<size>::~Sort()
 {
     delete[] tab;
 }
 
 
-template <typename T, int size>
-void Sort< T , size>::Quicksort(int b, int e){
+template < int size>
+void Sort<size>::Quicksort(int b, int e){
 
 
     int begin=b;
     int end=e;
     int middle=(b+e)/2;
-    int pivot=tab[middle];
+    int pivot=tab[middle].get_ranking();
 
 
     while(begin<=end){
-        while(tab[begin]<pivot) begin++;
-        while(tab[end]>pivot) end--;
+        while(tab[begin].get_ranking()<pivot) begin++;
+        while(tab[end].get_ranking()>pivot) end--;
 
         if(begin<=end){
-            int tmp=tab[end];
-            tab[end]=tab[begin];
-            tab[begin]=tmp;
+            int tmp=tab[end].get_ranking();
+            tab[end].set_ranking(tab[begin].get_ranking());
+            tab[begin].set_ranking(tmp);
+
+            std::string tmp2=tab[end].get_title();
+            tab[end].set_title(tab[begin].get_title());
+            tab[begin].set_title(tmp2);
+
+
             begin++;
             end--;
         }
@@ -59,43 +66,34 @@ void Sort< T , size>::Quicksort(int b, int e){
 
 
 
-template <typename T, int size>
-void Sort< T , size>::Display(){
+template <int size>
+void Sort<size>::Display(){
 
 
-        for(int j=0;j<size;j++){
-            std::cout<<tab[j]<<std::endl;
-        }
-        std::cout<<std::endl;
+    for(int j=0;j<size;j++){
+        std::cout<<tab[j].get_ranking()<<" "<<tab[j].get_title()<<std::endl;
+
+    }
+    std::cout<<std::endl;
 
 
 }
 
 
-template <typename T, int size>
-void Sort<T,size>::RandomInit() {
 
-    srand(time(NULL));
+template <int size>
+void Sort<size>::Check(){
 
-        for(int j=0;j<size;j++){
-            tab[j]=(std::rand()%10)+1;
+    for(int j=1;j<size;j++){
+
+        if(tab[j-1].get_ranking()>tab[j].get_ranking()){
+
+            std::cout<<"Nie dziala"<<std::endl;
+            exit(1);
+
         }
-        std::cout<<std::endl;
 
-}
-
-
-
-
-template <typename T, int size>
-void Sort<T,size>::Check(){
-
-        for(int j=0;j<size;++j){
-            if(tab[j-1]>tab[j]){
-                std::cout<<"Nie dziala"<<std::endl;
-                exit(1);
-            }
-        }
+    }
     std::cout<<"Poprawnie"<<std::endl;
 
 }
@@ -103,8 +101,8 @@ void Sort<T,size>::Check(){
 
 
 
-template <typename T, int size>
-void Sort<T, size>::Merge(int b, int e){
+template <int size>
+void Sort< size>::Merge(int b, int e){
 
     if(b<e){
         int m=(b+e)/2;
@@ -116,10 +114,14 @@ void Sort<T, size>::Merge(int b, int e){
 }
 
 
-template <typename T, int size>
-    void Sort<T, size>::MergeSort(int begin, int end, int middle){
+template <int size>
+void Sort<size>::MergeSort(int begin, int end, int middle){
 
-    int *temp= new int[size];
+
+
+
+    Object *temp1 = new Object[begin+end+1];
+
 
     int point1=begin;
     int point2=middle+1;
@@ -130,43 +132,107 @@ template <typename T, int size>
     while(point1<=middle && point2<=end ){
 
 
+        if(tab[point1].get_ranking()<tab[point2].get_ranking()){
 
-    if(tab[point1]<tab[point2]){
-        temp[index]=tab[point1];
-        point1++;
-    }
 
-    else {
-        temp[index]=tab[point2];
-        point2++;
-    }
+            temp1[index].set_ranking(tab[point1].get_ranking());
+           // temp1[index].set_title(tab[point1].get_title());
+
+            point1++;
+
+        }
+
+        else {
+
+
+            temp1[index].set_ranking(tab[point2].get_ranking());
+           // temp1[index].set_title(tab[point2].get_title());
+
+            point2++;
+
+
+        }
+
+
         index++;
+
     }
 
 
 
     while (point1<=middle){
-        temp[index]=tab[point1];
+
+        temp1[index].set_ranking(tab[point1].get_ranking());
+        //temp1[index].set_title(tab[point1].get_title());
+
         point1++;
         index++;
+
     }
 
     while(point2<=end){
-        temp[index]=tab[point2];
+
+        temp1[index].set_ranking(tab[point2].get_ranking());
+       // temp1[index].set_title(tab[point2].get_title());
+
         point2++;
         index++;
+
     }
 
+
+
     for(int i=begin;i<=end;i++) {
-        tab[i]=temp[i];
+
+
+        tab[i].set_ranking(temp1[i].get_ranking());
+        //tab[i].set_title(temp1[i].get_title());
+
     }
-    delete[] temp;
+
+  delete [] temp1;
 
 }
 
 
-template <typename T, int size>
-void Sort<T, size>::Cup(const int wmin, const int wmax,int index){
+
+
+
+
+
+
+
+template <int size>
+void Sort<size>::CupSort(const int wmin, const int wmax,int index){
+
+
+
+
+    Object **temp1 = new Object[wmax+1];
+
+    while(wmax<=index){
+
+        for(int i=0;i<size;i++) {
+
+           //int j = tab[i].get_ranking();
+
+
+        }
+    }
+
+}
+
+
+
+
+
+
+
+
+/*
+
+template <int size>
+void Sort<size>::Cup(const int wmin, const int wmax,int index){
 
     int *temp= new int[wmax+1];
     int b=0;
@@ -189,15 +255,14 @@ void Sort<T, size>::Cup(const int wmin, const int wmax,int index){
 
         for(int k=1;k<=temp[j];k++) {
             tab[b]=j;
-             b++;
-          }
+            b++;
+        }
 
     }
 
 
 
-}
-
+}*/
 
 
 
