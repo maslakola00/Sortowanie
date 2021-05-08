@@ -1,11 +1,5 @@
-#include <iostream>
-#include <algorithm>
-#include <utility>
-#include <stdlib.h>
-#include <chrono>
-#include "cstdlib"
+
 #include "Sort.h"
-#include "Object.h"
 
 
 template <int size>
@@ -136,7 +130,7 @@ void Sort<size>::MergeSort(int begin, int end, int middle){
 
 
             temp1[index].set_ranking(tab[point1].get_ranking());
-           // temp1[index].set_title(tab[point1].get_title());
+            temp1[index].set_title(tab[point1].get_title());
 
             point1++;
 
@@ -146,7 +140,7 @@ void Sort<size>::MergeSort(int begin, int end, int middle){
 
 
             temp1[index].set_ranking(tab[point2].get_ranking());
-           // temp1[index].set_title(tab[point2].get_title());
+             temp1[index].set_title(tab[point2].get_title());
 
             point2++;
 
@@ -163,7 +157,7 @@ void Sort<size>::MergeSort(int begin, int end, int middle){
     while (point1<=middle){
 
         temp1[index].set_ranking(tab[point1].get_ranking());
-        //temp1[index].set_title(tab[point1].get_title());
+        temp1[index].set_title(tab[point1].get_title());
 
         point1++;
         index++;
@@ -172,11 +166,11 @@ void Sort<size>::MergeSort(int begin, int end, int middle){
 
     while(point2<=end){
 
-        temp1[index].set_ranking(tab[point2].get_ranking());
-       // temp1[index].set_title(tab[point2].get_title());
+         temp1[index].set_ranking(tab[point2].get_ranking());
+         temp1[index].set_title(tab[point2].get_title());
 
-        point2++;
-        index++;
+            point2++;
+            index++;
 
     }
 
@@ -186,7 +180,7 @@ void Sort<size>::MergeSort(int begin, int end, int middle){
 
 
         tab[i].set_ranking(temp1[i].get_ranking());
-        //tab[i].set_title(temp1[i].get_title());
+        tab[i].set_title(temp1[i].get_title());
 
     }
 
@@ -194,32 +188,87 @@ void Sort<size>::MergeSort(int begin, int end, int middle){
 
 }
 
+template <int size>
+void Sort<size>::Shellsort(){
+
+    int distance = size / 2;
+    int temp_d; //zmienna pomocnicza dla dystansu
+    int temp; //zmienna do przechowywania rankingu
+    int j=0;
+    std::string temp_s; //zmienna do przechowywania stringa
+
+    while(distance>0) //nie chcemy porownywac liczb samych ze soba
+    {
+        temp_d=distance;
+        while(temp_d<size)
+        {
+            temp=tab[temp_d].get_ranking();
+            temp_s=tab[temp_d].get_title();
 
 
+            for(j=temp_d; j>=distance && tab[j-distance].get_ranking()>temp;j=j-distance)
+            {
+
+                tab[j].set_ranking(tab[j-distance].get_ranking());
+                tab[j].set_title(tab[j-distance].get_title());
 
 
+            }
 
+            tab[j].set_ranking(temp);
+            tab[j].set_title(temp_s);
+
+            temp_d++;
+        }
+        distance = distance/2;
+    }
+}
 
 
 
 template <int size>
-void Sort<size>::CupSort(const int wmin, const int wmax,int index){
+void Sort<size>::CupSort(const int wmin, const int wmax){
+
+    LinkedList<Object>* temp = new LinkedList<Object>[wmax + 1];
+
+   int value = wmin;
 
 
+    for(int i=0; i < size; i++)
+    {
 
+        while(value <= wmax)
+        {
+            if(tab[i].get_ranking()==value) {
+                temp[value].add_without_priority(tab[i]);
 
-    Object **temp1 = new Object[wmax+1];
+                value++;
+            }
 
-    while(wmax<=index){
-
-        for(int i=0;i<size;i++) {
-
-           //int j = tab[i].get_ranking();
-
+             else   value++;
 
         }
+
+        value = wmin;
+
     }
 
+    int b=0;
+    int i=0;
+
+  while(i<size)
+    {
+        b++;
+        for(int j=0;j<temp[b].getSize();j++) {
+
+            tab[i].set_ranking(temp[b][j].get_ranking());
+            tab[i].set_title(temp[b][j].get_title());
+            temp[b].removeFront();
+
+
+            i++;
+        }
+    }
 }
 
 

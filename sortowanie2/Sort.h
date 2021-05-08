@@ -6,6 +6,8 @@
 #include <chrono>
 #include "cstdlib"
 #include "Object.h"
+#include "LinkedList.cpp"
+
 
 template < int size>
 class Sort{
@@ -23,7 +25,8 @@ public:
     void Check(); //sprawdzanie czy tablica dobrze się posortowała
     void Merge(int, int);
     void MergeSort(int, int, int );
-    void CupSort(const int, const int, int ); //sortowanie kubelkowe
+    void CupSort(const int, const int ); //sortowanie kubelkowe
+    void Shellsort();
 
     Object* get_obj(){
 
