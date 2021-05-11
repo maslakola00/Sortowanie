@@ -3,173 +3,150 @@
 #include <utility>
 #include <stdlib.h>
 #include <chrono>
+#include <time.h>
 #include <fstream>
+#include <iomanip>
 #include <string>
 #include "LinkedList.h"
 #include "cstdlib"
 #include "Object.h"
 #include "Sort.cpp"
-
+typedef std::chrono::high_resolution_clock Clock;
 
 
 
 int main() {
 
 
-    const int size = 3000;
-    const int min = 0;
-    const int max = 10;
-    int i = 4;
-    std::string line;
-    std::string line1;
-    std::string mark;
-    int first, second;
-     int k = 0;
+    const int size = 900000; //ilosc elementow do posortowania
+    const int min = 0; //wartosc minimalna kubelka
+    const int max = 10; //wartosc maksymalna kubelka
+    int i; //zmienna do funkcji switch
+    clock_t start,stop;
+    double czas;
 
-    Sort<size> tablica;
+    Sort<size> tablica; //oryginal tablicy
 
 
-
-
-    /*CZYTANIE Z PLIKU*/
-
-    std::fstream filmy;
-    filmy.open("movie.txt", std::ios::in);
-
-    std::fstream rankingi;
-    rankingi.open("rating.txt", std::ios::in);
-
-    if (filmy.good() == false) {
-
-        std::cout << "Nie mozna odtworzyc pliku z filmami" << std::endl;
-    }
-
-    if (rankingi.good() == false) {
-
-        std::cout << "Nie mozna odtworzyc pliku z rankingami" << std::endl;
-    }
-
-
-     for(int b=0;b<size;b++){
-
-           std::getline(filmy,line);
-           std::string mov = line;
-           std::getline(rankingi,line1);
-
-            if(line1!=" ") {
-
-                   int rank = atoi(line1.c_str());
-
-                   tablica.get_obj()[k].set_ranking(rank);
-                   tablica.get_obj()[k].set_title(mov);
-
-                   k++;
-
-           }
-
-    }
+    tablica.Read_from_file(); //czytanie z pliku i usuwanie pustych rankingow
 
 
 
-/*
-    std::ifstream dane;
-    dane.open("projekt2_dane.csv",std::ios::in);
-
-    if (dane.good() == false) {
-
-        std::cout << "Nie mozna odtworzyc pliku" << std::endl;
-    }
-
-    getline(dane,line);
-    while(k < size){
-
-        line1="";
-        getline(dane,line);
-        first = line.rfind(',');
-        second = line.find_first_of(',');
-
-        for(int j=first+1; j<second;j++){
-
-            line1 += line[j];
-
-        }
-
-        tablica.get_obj()[k].set_title(line1);
+    std::cout<<" "<<std::endl;
+    std::cout<<" "<<std::endl;
+    std::cout<<" "<<std::endl;
+    std::cout<<"------------MENU--------------"<<std::endl;
+    std::cout<<"Jaki algorytm sortowania chcesz wykonać?"<<std::endl;
+    std::cout<<"1.QUICKSORT"<<std::endl;
+    std::cout<<"2.MERGESORT"<<std::endl;
+    std::cout<<"3.SHELLSORT"<<std::endl;
+    std::cout<<"4.SORTOWANIE KUBELKOWE (STRUKTURA:LISTA)"<<std::endl;
+    std::cout<<"5.SORTOWANIE KUBELKOWE (STRUKTURA: TABLICA)"<<std::endl;
+    std::cout<<""<<std::endl;
+    std::cout<<"Dodatkowe opcje: "<<std::endl;
+    std::cout<<"5.Wyświetlenie aktualnej tablicy"<<std::endl;
+    std::cout<<"6.Mediana i srednia"<<std::endl;
+    std::cout<<"7.Zakonczenie dzialania programu"<<std::endl;
+    std::cout<<" "<<std::endl;
+    std::cout<<" "<<std::endl;
+    std::cout<<" "<<std::endl;
 
 
-        if(line[second+2]=='.'){
-
-            mark[0]=line[second+1];
-            tablica.get_obj()[k].set_ranking(std::stoi(mark));
-            k++;
-
-        }
-
-        if(line[second+3]=='.'){
-
-            tablica.get_obj()[k].set_ranking(10);
-            k++;
-        }
-
-    }
- dane.close();
-
-*/
-
-    /*WYBIERANIE SORTOWANIA*/
-
-       switch(i) {
-
-           case 1:
+    while(i!=8) {
 
 
-               tablica.Quicksort(0, size - 1);
-              tablica.Display();
-               tablica.Check();
-               break;
+        std::cin>>i;
+        std::cout<<" "<<std::endl;
+        std::cout<<" "<<std::endl;
+
+        switch (i) {
 
 
-
-           case 2:
-
-
-
-               // tablica.Display();
-                tablica.Merge(0,size-1);
-                //tablica.Display();
+            case 1: {
+                auto start_time = Clock::now();
+                tablica.Quicksort(0, size - 1);
+                auto end_time = Clock::now();
                 tablica.Check();
 
-               break;
+                std::cout << "Time difference: "
+                          <<std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count()
+                          << " milliseconds " << std::endl;
 
 
-           case 3:
+                break;
+            }
 
-              // tablica.Display();
-               tablica.Shellsort();
-               std::cout<<"Po sortowaniu:"<<std::endl;
-               tablica.Display();
-               tablica.Check();
+            case 2: {
+                auto start_time = Clock::now();
+                tablica.Merge(0, size - 1);
+                auto end_time = Clock::now();
+                tablica.Check();
+
+                std::cout << "Time difference: "
+                          <<std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count()
+                          << " milliseconds " << std::endl;
+                break;
+            }
+
+            case 3: {
+                auto start_time = Clock::now();
+                tablica.Shellsort();
+                auto end_time = Clock::now();
+
+                tablica.Check();
+                std::cout << "Time difference: "
+                          <<std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count()
+                          << " milliseconds " << std::endl;
+                break;
+            }
+            case 4:
+            {
+                auto start_time = Clock::now();
+                tablica.CupSort(1, 10);
+                auto end_time = Clock::now();
+
+                tablica.Check();
+                std::cout << "Time difference: "
+                          <<std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count()
+                          << " milliseconds " << std::endl;
 
 
 
+                break;
+            }
 
-               break;
+            case 5:
+            {
+                auto start_time = Clock::now();
+                tablica.bucket(1, 10);
+                auto end_time = Clock::now();
+
+                tablica.Check();
+                std::cout << "Time difference: "
+                          <<std::chrono::duration_cast<std::chrono::nanoseconds>(end_time - start_time).count()
+                          << " nanoseconds " << std::endl;
 
 
-
-           case 4:
-              // tab1.RandomInit();
-              // tablica.Display();
-               std::cout<<"Po sortowaniu"<<std::endl;
-               tablica.CupSort(0,10);
-              // tablica.Display();
-               tablica.Check();
-
-               break;
+                break;
+            }
 
 
-       }
+            case 6:
+                tablica.Display();
+                break;
 
+            case 7:
+                tablica.Calculations();
+                break;
+
+            default:
+                i=8;
+                std::cout<<"Zakonczenie pracy programu"<<std::endl;
+                break;
+
+        }
+
+    }
 
 
 }

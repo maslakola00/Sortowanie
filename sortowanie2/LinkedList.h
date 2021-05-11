@@ -63,8 +63,9 @@ public:
  * */
     void add_without_priority(const TYPE& Node);
 
-    Object operator[](int index);
+  //  Object operator[](int index);
 
+    TYPE operator[](int index);
 
     int getSize(){
 
@@ -72,7 +73,7 @@ public:
 
     };
 
-
+    void deleteList();
 
 };
 

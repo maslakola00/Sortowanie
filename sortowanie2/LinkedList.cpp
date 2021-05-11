@@ -12,11 +12,25 @@ LinkedList<TYPE>::~LinkedList()
 
 //inicjuje obiekt ktory nie poakzuje na nic (NULL)
 template<typename TYPE>
-LinkedList<TYPE>::LinkedList(): head(nullptr)
+LinkedList<TYPE>::LinkedList(): head(nullptr), Listsize(0)
 {
 
 
 }
+template<typename TYPE>
+void LinkedList<TYPE>::deleteList()
+{
+
+
+    for(int i=0;i<Listsize;i++)
+    {
+        SNode<TYPE>* temp = head;
+        head= head->get_next_elem();
+        delete temp;
+    }
+    Listsize = 0;
+}
+
 
 
 template<typename TYPE>
@@ -32,10 +46,10 @@ void LinkedList<TYPE>::removeFront()
 
     SNode<TYPE>* temp = head; //tworzymy zmienna ktora pokazuje na head zeby nie zgubic pamieci head
     head = head->get_next_elem(); //przestawiamy head na nastepny element
-    Listsize--;
+
 
     delete temp; //usuwamy pamiec ktora byla pod head
-
+    Listsize--;
 
 }
 
@@ -72,11 +86,14 @@ void LinkedList<TYPE>::add_without_priority(const TYPE& Node)
     temp->set_elem(Node); //podpisujemy wartosc
     temp->set_next_elem(*head); // pod temp podpisz head
     head = temp;
+
     Listsize++;
 }
 
+
+
 template<typename TYPE>
-Object LinkedList<TYPE>::operator[](int index)
+TYPE LinkedList<TYPE>::operator[](int index)
 {
     SNode<TYPE>* tmp = new SNode<TYPE>;
     tmp = head;
@@ -85,10 +102,9 @@ Object LinkedList<TYPE>::operator[](int index)
         tmp = tmp->get_next_elem();
 
 
-        return tmp->get_elem();
+    return tmp->get_elem();
 
 }
-
 
 
 
