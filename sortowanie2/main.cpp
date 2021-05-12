@@ -18,21 +18,29 @@ typedef std::chrono::high_resolution_clock Clock;
 int main() {
 
 
-    const int size = 900000; //ilosc elementow do posortowania
+    const int size = 962763; //ilosc elementow do posortowania
     const int min = 0; //wartosc minimalna kubelka
     const int max = 10; //wartosc maksymalna kubelka
     int i; //zmienna do funkcji switch
     clock_t start,stop;
     double czas;
 
+
+
+
     Sort<size> tablica; //oryginal tablicy
 
 
+    std::cout<<""<<std::endl;
+    auto start_time = Clock::now();
     tablica.Read_from_file(); //czytanie z pliku i usuwanie pustych rankingow
+    auto end_time = Clock::now();
+    std::cout << "Czas czytania z pliku i usuwania tytulow bez rankingu: "
+              <<std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count()
+              << " milliseconds " << std::endl;
 
 
 
-    std::cout<<" "<<std::endl;
     std::cout<<" "<<std::endl;
     std::cout<<" "<<std::endl;
     std::cout<<"------------MENU--------------"<<std::endl;
@@ -44,9 +52,9 @@ int main() {
     std::cout<<"5.SORTOWANIE KUBELKOWE (STRUKTURA: TABLICA)"<<std::endl;
     std::cout<<""<<std::endl;
     std::cout<<"Dodatkowe opcje: "<<std::endl;
-    std::cout<<"5.Wyświetlenie aktualnej tablicy"<<std::endl;
-    std::cout<<"6.Mediana i srednia"<<std::endl;
-    std::cout<<"7.Zakonczenie dzialania programu"<<std::endl;
+    std::cout<<"6.Wyświetlenie aktualnej tablicy"<<std::endl;
+    std::cout<<"7.Mediana i srednia"<<std::endl;
+    std::cout<<"8.Zakonczenie dzialania programu"<<std::endl;
     std::cout<<" "<<std::endl;
     std::cout<<" "<<std::endl;
     std::cout<<" "<<std::endl;
@@ -63,6 +71,7 @@ int main() {
 
 
             case 1: {
+
                 auto start_time = Clock::now();
                 tablica.Quicksort(0, size - 1);
                 auto end_time = Clock::now();

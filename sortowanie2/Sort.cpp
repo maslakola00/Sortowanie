@@ -81,7 +81,6 @@ void Sort<size>::Quicksort(int b, int e){
 template <int size>
 void Sort<size>::Display(){
 
-
     for(int j=0;j<size;j++){
         std::cout<<tab[j].get_ranking()<<" "<<tab[j].get_title()<<std::endl;
 
@@ -253,9 +252,9 @@ void Sort<size>::Shellsort(){
 template <int size>
 void Sort<size>::CupSort(const int wmin, const int wmax){
 
-    LinkedList<int>* temp_rate = new LinkedList<int>[wmax + 1]; //tworzenie listy obiektow
+    LinkedList<int>* temp_rate = new LinkedList<int>[wmax + 1]; //tworzenie listy int
 
-    LinkedList<std::string>* temp_title = new LinkedList<std::string>[wmax + 1];
+    LinkedList<std::string>* temp_title = new LinkedList<std::string>[wmax + 1]; //tworzenie listy string
 
    int value = wmin;
     int i=0;
@@ -320,8 +319,10 @@ void Sort<size>::Read_from_file() {
         int ocena;
         int j = 0; // licznik rekordów
 
+
         //odczyt z pliku
         std::getline (dane, odczyt); // ignorowanie pierwszej linii w excelu ktora nie zawiera danych
+
         while (j < size)
         {
             pomoc_tyt = ""; // resetujemy pole tytuł
@@ -346,7 +347,10 @@ void Sort<size>::Read_from_file() {
                 tab[j].set_ranking(10);
                 j++;
             }
+
+
         }
+
 
 
         dane.close(); //zamkniecie pliku
@@ -419,7 +423,7 @@ void Sort<size>::bucket(const int wmin, const int wmax) {
 
 
 
-    std::string **temp = new std::string *[wmax]; //tablica string ktora bedzie zawierala tytulu
+    std::string **temp = new std::string *[wmax]; //tablica string
 
 
 

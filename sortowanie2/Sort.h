@@ -10,10 +10,11 @@
 #include "LinkedList.cpp"
 
 
-template < int size>
+template <int size>
 class Sort{
 
     Object *tab;
+
 
 
 public:
